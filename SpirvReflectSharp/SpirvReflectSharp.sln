@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31112.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpirvReflectSharp", "SpirvReflectSharp\SpirvReflectSharp.csproj", "{94AABC31-7810-4A4D-B6B9-E621E6A5FA8E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpirvReflectSharp.Tests", "SpirvReflectSharp.Tests\SpirvReflectSharp.Tests.csproj", "{DDEE1D60-4AE6-4DCA-93B0-F078D90D402E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{94AABC31-7810-4A4D-B6B9-E621E6A5FA8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94AABC31-7810-4A4D-B6B9-E621E6A5FA8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94AABC31-7810-4A4D-B6B9-E621E6A5FA8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94AABC31-7810-4A4D-B6B9-E621E6A5FA8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDEE1D60-4AE6-4DCA-93B0-F078D90D402E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDEE1D60-4AE6-4DCA-93B0-F078D90D402E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDEE1D60-4AE6-4DCA-93B0-F078D90D402E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDEE1D60-4AE6-4DCA-93B0-F078D90D402E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7D7E3581-7451-4BBD-B3A1-91A7BD880900}
+	EndGlobalSection
+EndGlobal
