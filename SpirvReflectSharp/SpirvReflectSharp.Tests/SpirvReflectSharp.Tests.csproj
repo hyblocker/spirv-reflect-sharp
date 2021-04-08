@@ -1,11 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>netcoreapp3.1</TargetFramework>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<IsPackable>false</IsPackable>
 		<OutputType>exe</OutputType>
-		<StartupObject>Program</StartupObject>
+		<StartupObject>SpirvReflectSharp.Tests.Program</StartupObject>
+		<Platforms>AnyCPU;x64;x86</Platforms>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\SpirvReflectSharp\SpirvReflectSharp.csproj" />
+	</ItemGroup>
 
 </Project>

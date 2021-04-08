@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace SpirvReflectSharp.Tests
 {
@@ -6,7 +7,10 @@ namespace SpirvReflectSharp.Tests
 	{
 		static void Main(string[] args)
 		{
-			Console.WriteLine("Hello World!");
+			byte[] shaderBytes = File.ReadAllBytes(@"E:\Data\Projects\Vessel\VesselSharp\spirv-reflect-sharp\frag.spv");
+			SpirvReflect.ReflectCreateShaderModule(shaderBytes);
+
+
 		}
 	}
 }

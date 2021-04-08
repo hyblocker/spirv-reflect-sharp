@@ -1,7 +1,30 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-  </PropertyGroup>
+	<PropertyGroup>
+		<Description>A .NET wrapper for SPIRV-Reflect.</Description>
+		<AssemblyVersion>1.0</AssemblyVersion>
+		<Authors>Hyblocker</Authors>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<DebugType>portable</DebugType>
+		<AssemblyName>SpirvReflectSharp</AssemblyName>
+		<PackageId>SpirvReflectSharp</PackageId>
+		<PackageProjectUrl>https://github.com/hyblocker/spirv-reflect-sharp</PackageProjectUrl>
+		<RootNamespace>SpirvReflectSharp</RootNamespace>
+		<Platforms>AnyCPU;x64;x86</Platforms>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Content Include="..\..\deps\spirv-reflect\win-x86\spirv-reflect.dll">
+			<PackagePath>runtimes/win-x86/native</PackagePath>
+			<Pack>true</Pack>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="..\..\deps\spirv-reflect\win-x64\spirv-reflect.dll">
+			<PackagePath>runtimes/win-x64/native</PackagePath>
+			<Pack>true</Pack>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 
 </Project>
