@@ -21,14 +21,12 @@ namespace SpirvReflectSharp
 
 				if (result == SpirvReflectNative.SpvReflectResult.SPV_REFLECT_RESULT_SUCCESS)
 				{
-					return new ShaderModule();
+					return new ShaderModule(module);
 				}
 				else
 				{
 					throw new SpirvReflectException(result);
 				}
-
-				System.Diagnostics.Debugger.Break();
 			}
 		}
 	}
