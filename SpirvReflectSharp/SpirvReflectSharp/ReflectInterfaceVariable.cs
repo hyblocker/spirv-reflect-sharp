@@ -1,28 +1,107 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SpirvReflectSharp
+﻿namespace SpirvReflectSharp
 {
 	public struct ReflectInterfaceVariable
 	{
-		public uint spirv_id;
-		public string name;
-		public uint location;
-		public StorageClass storage_class;
-		public sbyte semantic;
-		public ReflectDecoration decoration_flags;
-		public BuiltIn built_in;
-		//public ReflectNumericTraits numeric;
-		//public ReflectArrayTraits array;
-		public ReflectInterfaceVariable[] members;
-		public ReflectFormat format;
-		//public ReflectTypeDescription* type_description;
+		public uint SpirvId;
+		public string Name;
+		public uint Location;
+		public StorageClass StorageClass;
+		public string Semantic;
+		public ReflectDecoration DecorationFlags;
+		public BuiltIn BuiltIn;
+		public ReflectNumericTraits Numeric;
+		public ReflectArrayTraits Array;
+		public ReflectInterfaceVariable[] Members;
+		public ReflectFormat Format;
+		public ReflectTypeDescription TypeDescription;
 
-		public Anonymous_Struct_word_offset word_offset;
-		public struct Anonymous_Struct_word_offset
+		public override string ToString()
 		{
-			public uint location;
+			return "ReflectInterfaceVariable {" + Name + "} [" + Members.Length + "]";
+		}
+
+		internal static unsafe ReflectInterfaceVariable[] ToManaged(SpirvReflectNative.SpvReflectInterfaceVariable** input_vars, uint var_count)
+		{
+			ReflectInterfaceVariable[] intf_vars = new ReflectInterfaceVariable[var_count];
+
+			for (int i = 0; i < var_count; i++)
+			{
+				var interfaceVarNative = input_vars[i];
+				var intf = *interfaceVarNative;
+				ReflectInterfaceVariable variable = new ReflectInterfaceVariable();
+
+				PopulateReflectInterfaceVariable(ref intf, ref variable);
+				variable.Members = ToManagedArray(intf.members, intf.member_count);
+
+				intf_vars[i] = variable;
+			}
+
+			return intf_vars;
+		}
+
+		private static unsafe ReflectInterfaceVariable[] ToManagedArray(SpirvReflectNative.SpvReflectInterfaceVariable* input_vars, uint var_count)
+		{
+			ReflectInterfaceVariable[] intf_vars = new ReflectInterfaceVariable[var_count];
+
+			for (int i = 0; i < var_count; i++)
+			{
+				var intf = input_vars[i];
+				ReflectInterfaceVariable variable = new ReflectInterfaceVariable();
+
+				PopulateReflectInterfaceVariable(ref intf, ref variable);
+				variable.Members = ToManagedArray(intf.members, intf.member_count);
+
+				intf_vars[i] = variable;
+			}
+
+			return intf_vars;
+		}
+
+		private static unsafe void PopulateReflectInterfaceVariable (
+			ref SpirvReflectNative.SpvReflectInterfaceVariable intf,
+			ref ReflectInterfaceVariable variable)
+		{
+			variable.SpirvId = intf.spirv_id;
+			variable.Name = new string(intf.name);
+			variable.Location = intf.location;
+			variable.StorageClass = (StorageClass)intf.storage_class;
+			variable.Semantic = new string(intf.semantic);
+			variable.DecorationFlags = (ReflectDecoration)intf.decoration_flags.Data;
+			variable.BuiltIn = (BuiltIn)intf.built_in;
+			variable.Format = (ReflectFormat)intf.format;
+			variable.TypeDescription = ReflectTypeDescription.GetManaged(ref *intf.type_description);
+
+			variable.Array = new ReflectArrayTraits()
+			{
+				Dims = new uint[intf.array.dims_count],
+				Stride = intf.array.stride,
+			};
+			// Populate Dims
+			for (int i = 0; i < intf.array.dims_count; i++)
+			{
+				variable.Array.Dims[i] = intf.array.dims[i];
+			}
+
+			variable.Numeric = new ReflectNumericTraits()
+			{
+				Matrix = new SpirvMatrix()
+				{
+					ColumnCount = intf.numeric.matrix.column_count,
+					RowCount = intf.numeric.matrix.row_count,
+					Stride = intf.numeric.matrix.stride
+				},
+				Scalar = new SpirvScalar()
+				{
+					Signedness = intf.numeric.scalar.signedness,
+					Width = intf.numeric.scalar.width
+				},
+				Vector = new SpirvVector()
+				{
+					ComponentCount = intf.numeric.vector.component_count
+				},
+			};
+
+
 		}
 	}
 }

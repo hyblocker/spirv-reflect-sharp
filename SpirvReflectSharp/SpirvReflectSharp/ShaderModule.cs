@@ -41,25 +41,27 @@ namespace SpirvReflectSharp
 				SpirvReflectUtils.Assert(result == SpirvReflectNative.SpvReflectResult.SPV_REFLECT_RESULT_SUCCESS);
 
 				// Convert to managed
-				ReflectInterfaceVariable[] intf_vars = new ReflectInterfaceVariable[var_count];
+				return ReflectInterfaceVariable.ToManaged(input_vars, var_count);
+			}
+		}
+		
+		public unsafe ReflectInterfaceVariable[] EnumerateInterfaceVariables()
+		{
+			fixed (SpirvReflectNative.SpvReflectShaderModule* inmodule = &NativeShaderModule)
+			{
+				uint var_count = 0;
+				var result = SpirvReflectNative.spvReflectEnumerateInterfaceVariables(inmodule, &var_count, null);
 
-				for (int i = 0; i < var_count; i++)
-				{
-					var interfaceVarNative = input_vars[i];
-					var intf = *interfaceVarNative;
-					ReflectInterfaceVariable variable = new ReflectInterfaceVariable();
+				SpirvReflectUtils.Assert(result == SpirvReflectNative.SpvReflectResult.SPV_REFLECT_RESULT_SUCCESS);
 
-					variable.name = new string(intf.name);
-					variable.location = intf.location;
-					variable.spirv_id = intf.spirv_id;
-					variable.storage_class = (StorageClass)intf.storage_class;
-					variable.format = (ReflectFormat)intf.format;
-					variable.built_in = (BuiltIn)intf.built_in;
+				SpirvReflectNative.SpvReflectInterfaceVariable** interface_vars =
+					stackalloc SpirvReflectNative.SpvReflectInterfaceVariable*[(int)(var_count * sizeof(SpirvReflectNative.SpvReflectInterfaceVariable))];
 
-					intf_vars[i] = variable;
-				}
+				result = SpirvReflectNative.spvReflectEnumerateInterfaceVariables(inmodule, &var_count, interface_vars);
+				SpirvReflectUtils.Assert(result == SpirvReflectNative.SpvReflectResult.SPV_REFLECT_RESULT_SUCCESS);
 
-				return intf_vars;
+				// Convert to managed
+				return ReflectInterfaceVariable.ToManaged(interface_vars, var_count);
 			}
 		}
 
@@ -79,9 +81,7 @@ namespace SpirvReflectSharp
 				SpirvReflectUtils.Assert(result == SpirvReflectNative.SpvReflectResult.SPV_REFLECT_RESULT_SUCCESS);
 
 				// Convert to managed
-				ReflectBlockVariable[] blockVars = new ReflectBlockVariable[var_count];
-
-				return blockVars;
+				return ReflectBlockVariable.ToManaged(push_consts, var_count);
 			}
 		}
 

@@ -953,5 +953,51 @@ namespace SpirvReflectSharp
 		Max = 2147483647
 	}
 
+	[Flags]
+	public enum ReflectDecoration : uint
+	{
+		None = 0x00000000,
+		Block = 0x00000001,
+		BufferBlock = 0x00000002,
+		RowMajor = 0x00000004,
+		ColumnMajor = 0x00000008,
+		BuiltIn = 0x00000010,
+		NoPerspective = 0x00000020,
+		Flat = 0x00000040,
+		NonWritable = 0x00000080,
+	}
 
+	[Flags]
+	public enum ReflectVariable : uint
+	{
+		None = 0x00000000,
+		Unused = 0x00000001,
+	}
+
+	[Flags]
+	public enum ReflectType : uint
+	{
+		Undefined = 0x00000000,
+		Void = 0x00000001,
+		Bool = 0x00000002,
+		Int = 0x00000004,
+		Float = 0x00000008,
+		Vector = 0x00000100,
+		Matrix = 0x00000200,
+		ExternalImage = 0x00010000,
+		ExternalSampler = 0x00020000,
+		ExternalSampledImage = 0x00040000,
+		ExternalBlock = 0x00080000,
+		ExternalAccelerationStructure = 0x00100000,
+		ExternalMask = 0x00FF0000,
+		Struct = 0x10000000,
+		Array = 0x20000000,
+	}
+
+	public enum SamplingMode : byte
+	{
+		SingleSampled = 0,
+		MultiSampled = 1,
+		Unknown,
+	}
 }

@@ -11,6 +11,7 @@ namespace SpirvReflectSharp.Tests
 			using (ShaderModule module = SpirvReflect.ReflectCreateShaderModule(shaderBytes))
 			{
 				var in_vars = module.EnumerateInputVariables();
+				var intf_vars = module.EnumerateInterfaceVariables();
 				var push_constants = module.EnumeratePushConstants();
 			}
 
