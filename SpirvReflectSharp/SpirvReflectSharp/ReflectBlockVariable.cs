@@ -71,35 +71,8 @@
 			variable.Flags = (ReflectVariable)block.flags.Data;
 			variable.TypeDescription = ReflectTypeDescription.GetManaged(ref *block.type_description);
 
-			variable.Array = new ReflectArrayTraits()
-			{
-				Dims = new uint[block.array.dims_count],
-				Stride = block.array.stride,
-			};
-			// Populate Dims
-			for (int i = 0; i < block.array.dims_count; i++)
-			{
-				variable.Array.Dims[i] = block.array.dims[i];
-			}
-
-			variable.Numeric = new ReflectNumericTraits()
-			{
-				Matrix = new SpirvMatrix()
-				{
-					ColumnCount = block.numeric.matrix.column_count,
-					RowCount = block.numeric.matrix.row_count,
-					Stride = block.numeric.matrix.stride
-				},
-				Scalar = new SpirvScalar()
-				{
-					Signedness = block.numeric.scalar.signedness,
-					Width = block.numeric.scalar.width
-				},
-				Vector = new SpirvVector()
-				{
-					ComponentCount = block.numeric.vector.component_count
-				},
-			};
+			variable.Array = new ReflectArrayTraits(block.array);
+			variable.Numeric = new ReflectNumericTraits(block.numeric);
 
 		}
 	}

@@ -70,36 +70,8 @@
 			variable.BuiltIn = (BuiltIn)intf.built_in;
 			variable.Format = (ReflectFormat)intf.format;
 			variable.TypeDescription = ReflectTypeDescription.GetManaged(ref *intf.type_description);
-
-			variable.Array = new ReflectArrayTraits()
-			{
-				Dims = new uint[intf.array.dims_count],
-				Stride = intf.array.stride,
-			};
-			// Populate Dims
-			for (int i = 0; i < intf.array.dims_count; i++)
-			{
-				variable.Array.Dims[i] = intf.array.dims[i];
-			}
-
-			variable.Numeric = new ReflectNumericTraits()
-			{
-				Matrix = new SpirvMatrix()
-				{
-					ColumnCount = intf.numeric.matrix.column_count,
-					RowCount = intf.numeric.matrix.row_count,
-					Stride = intf.numeric.matrix.stride
-				},
-				Scalar = new SpirvScalar()
-				{
-					Signedness = intf.numeric.scalar.signedness,
-					Width = intf.numeric.scalar.width
-				},
-				Vector = new SpirvVector()
-				{
-					ComponentCount = intf.numeric.vector.component_count
-				},
-			};
+			variable.Array = new ReflectArrayTraits(intf.array);
+			variable.Numeric = new ReflectNumericTraits(intf.numeric);
 
 
 		}
