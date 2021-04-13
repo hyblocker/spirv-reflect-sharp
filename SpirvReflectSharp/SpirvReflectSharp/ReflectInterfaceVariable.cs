@@ -57,7 +57,7 @@
 			return intf_vars;
 		}
 
-		private static unsafe void PopulateReflectInterfaceVariable (
+		internal static unsafe void PopulateReflectInterfaceVariable (
 			ref SpirvReflectNative.SpvReflectInterfaceVariable intf,
 			ref ReflectInterfaceVariable variable)
 		{

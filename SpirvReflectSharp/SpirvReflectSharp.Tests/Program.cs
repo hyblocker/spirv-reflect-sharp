@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 
 namespace SpirvReflectSharp.Tests
 {
@@ -12,7 +11,10 @@ namespace SpirvReflectSharp.Tests
 			{
 				var in_vars = module.EnumerateInputVariables();
 				var intf_vars = module.EnumerateInterfaceVariables();
+				var out_vars = module.EnumerateOutputVariables();
 				var push_constants = module.EnumeratePushConstants();
+
+				var getVar = module.GetInputVariable(2);
 			}
 
 		}

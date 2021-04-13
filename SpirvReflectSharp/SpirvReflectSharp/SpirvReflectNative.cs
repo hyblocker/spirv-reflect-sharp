@@ -7,7 +7,8 @@
 //     the code is regenerated.
 // </auto-generated>
 // ReSharper disable All
-// NOTE: IF YOU UPDATE THIS, THE AUTOGENERATOR GENERATES DUPLICATE CODE, AND RENAME THE CLASS TO SpirvReflectNative
+// NOTE: IF YOU UPDATE THIS, THE AUTOGENERATOR GENERATES DUPLICATE CODE, AND DONT FORGET TO RENAME THE CLASS TO SpirvReflectNative
+// Changes: spvReflectGetCode's return type must be changed to char*
 //-------------------------------------------------------------------------------------
 using System;
 using System.Runtime.InteropServices;
@@ -36,7 +37,7 @@ namespace SpirvReflectSharp
 
 		// FunctionExtern @ spirv_reflect.c:3730 08/04/2021 09:01:00
 		[DllImport(LibraryName, EntryPoint = "spvReflectGetCode", CallingConvention = CallingConvention.Cdecl)]
-		public static extern uint* spvReflectGetCode(SpvReflectShaderModule* p_module);
+		public static extern char* spvReflectGetCode(SpvReflectShaderModule* p_module);
 
 		// FunctionExtern @ spirv_reflect.c:3739 08/04/2021 09:01:00
 		[DllImport(LibraryName, EntryPoint = "spvReflectGetEntryPoint", CallingConvention = CallingConvention.Cdecl)]

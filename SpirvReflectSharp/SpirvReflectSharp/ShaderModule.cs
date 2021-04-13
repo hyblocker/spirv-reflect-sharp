@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace SpirvReflectSharp
@@ -106,7 +104,65 @@ namespace SpirvReflectSharp
 			}
 		}
 
+		public unsafe uint GetCodeSize()
+		{
+			fixed (SpirvReflectNative.SpvReflectShaderModule* inmodule = &NativeShaderModule)
+			{
+				return SpirvReflectNative.spvReflectGetCodeSize(inmodule);
+			}
+		}
+		
+		public unsafe string GetCode()
+		{
+			fixed (SpirvReflectNative.SpvReflectShaderModule* inmodule = &NativeShaderModule)
+			{
+				return new string(SpirvReflectNative.spvReflectGetCode(inmodule));
+			}
+		}
 
+		public unsafe ReflectInterfaceVariable GetInputVariable(uint location)
+		{
+			fixed (SpirvReflectNative.SpvReflectShaderModule* inmodule = &NativeShaderModule)
+			{
+				var reflt = new ReflectInterfaceVariable();
+				SpirvReflectNative.SpvReflectResult result = SpirvReflectNative.SpvReflectResult.SPV_REFLECT_RESULT_NOT_READY;
+				var nativeOut = SpirvReflectNative.spvReflectGetInputVariable(inmodule, location, &result);
+				SpirvReflectUtils.Assert(result == SpirvReflectNative.SpvReflectResult.SPV_REFLECT_RESULT_SUCCESS);
+				ReflectInterfaceVariable.PopulateReflectInterfaceVariable(ref *nativeOut, ref reflt);
+				return reflt;
+			}
+		}
+		
+		public unsafe ReflectInterfaceVariable GetInputVariableByLocation(uint location)
+		{
+			fixed (SpirvReflectNative.SpvReflectShaderModule* inmodule = &NativeShaderModule)
+			{
+				var reflt = new ReflectInterfaceVariable();
+				SpirvReflectNative.SpvReflectResult result = SpirvReflectNative.SpvReflectResult.SPV_REFLECT_RESULT_NOT_READY;
+				var nativeOut = SpirvReflectNative.spvReflectGetInputVariableByLocation(inmodule, location, &result);
+				SpirvReflectUtils.Assert(result == SpirvReflectNative.SpvReflectResult.SPV_REFLECT_RESULT_SUCCESS);
+				ReflectInterfaceVariable.PopulateReflectInterfaceVariable(ref *nativeOut, ref reflt);
+				return reflt;
+			}
+		}
+		
+		public unsafe ReflectInterfaceVariable GetInputVariableBySemantic(string semantic)
+		{
+			fixed (SpirvReflectNative.SpvReflectShaderModule* inmodule = &NativeShaderModule)
+			{
+				var reflt = new ReflectInterfaceVariable();
+				SpirvReflectNative.SpvReflectResult result = SpirvReflectNative.SpvReflectResult.SPV_REFLECT_RESULT_NOT_READY;
+				byte[] semanticBytes = Encoding.ASCII.GetBytes(semantic);
+
+				fixed (byte* ptr = semanticBytes)
+				{
+					var nativeOut = SpirvReflectNative.spvReflectGetInputVariableBySemantic(inmodule, (sbyte*)ptr, &result);
+					SpirvReflectUtils.Assert(result == SpirvReflectNative.SpvReflectResult.SPV_REFLECT_RESULT_SUCCESS);
+					ReflectInterfaceVariable.PopulateReflectInterfaceVariable(ref *nativeOut, ref reflt);
+					return reflt;
+				}
+			}
+		}
 
 		#region Unmanaged
 
@@ -160,23 +216,10 @@ namespace SpirvReflectSharp
 
 					for (int k = 0; k < desc.binding_count; k++)
 					{
-						var binding = *desc.bindings[k];
-						EntryPoints[i].DescriptorSets[j].Bindings[k] = new ReflectDescriptorBinding()
-						{
-							Set = binding.set,
-							Accessed = binding.accessed,
-							Name = new string(binding.name),
-							Binding = binding.binding,
-							SpirvId = binding.spirv_id,
-							Count = binding.count,
-							ResourceType = (ReflectResourceType)binding.resource_type,
-							UavCounterId = binding.uav_counter_id,
-							InputAttachmentIndex = binding.input_attachment_index,
-							Image = new ReflectImageTraits(binding.image),
-						};
-
+						EntryPoints[i].DescriptorSets[j].Bindings[k] = new ReflectDescriptorBinding(*desc.bindings[k]);
 					}
 				}
+
 			}
 		}
 

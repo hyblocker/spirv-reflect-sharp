@@ -67,6 +67,22 @@
 			}
 		}
 	}
+
+	public struct ReflectBindingArrayTraits
+	{
+		public uint[] Dims;
+
+		internal unsafe ReflectBindingArrayTraits(SpirvReflectNative.SpvReflectBindingArrayTraits array)
+		{
+			Dims = new uint[array.dims_count];
+
+			// Populate Dims
+			for (int i = 0; i < array.dims_count; i++)
+			{
+				Dims[i] = array.dims[i];
+			}
+		}
+	}
 	
 	public struct ReflectImageTraits
 	{

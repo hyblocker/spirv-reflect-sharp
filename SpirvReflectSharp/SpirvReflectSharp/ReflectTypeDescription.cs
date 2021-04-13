@@ -14,7 +14,7 @@
 
 		public override string ToString()
 		{
-			return "ReflectTypeDescription {" + TypeFlags + "} [" + Members.Length + "]";
+			return "ReflectTypeDescription {" + StructMemberName + " " + TypeFlags + "} [" + Members.Length + "]";
 		}
 
 		internal static unsafe ReflectTypeDescription GetManaged(ref SpirvReflectNative.SpvReflectTypeDescription type_description)

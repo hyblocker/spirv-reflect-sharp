@@ -9,6 +9,5 @@
 		public ReflectDescriptorSet[] DescriptorSets;
 		public uint[] UsedUniforms;
 		public uint[] UsedPushConstants;
-		//public LocalSize LocalSize;
 	}
 }

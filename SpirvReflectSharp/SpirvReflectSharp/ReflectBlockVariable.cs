@@ -57,7 +57,7 @@
 			return blockVars;
 		}
 
-		private static unsafe void PopulateReflectBlockVariable(
+		internal static unsafe void PopulateReflectBlockVariable(
 			ref SpirvReflectNative.SpvReflectBlockVariable block,
 			ref ReflectBlockVariable variable)
 		{
@@ -69,7 +69,10 @@
 			variable.PaddedSize = block.padded_size;
 			variable.DecorationFlags = (ReflectDecoration)block.decoration_flags.Data;
 			variable.Flags = (ReflectVariable)block.flags.Data;
-			variable.TypeDescription = ReflectTypeDescription.GetManaged(ref *block.type_description);
+			if (block.type_description != null)
+			{
+				variable.TypeDescription = ReflectTypeDescription.GetManaged(ref *block.type_description);
+			}
 
 			variable.Array = new ReflectArrayTraits(block.array);
 			variable.Numeric = new ReflectNumericTraits(block.numeric);
