@@ -1,6 +1,6 @@
 # SPIRV-Reflect Sharp
 
-SPIRV-Reflect Sharp provides .NET bindings for [SPIRV-Reflect](https://www.github.com) to allow generating reflection data for shaders entirely using C#
+SPIRV-Reflect Sharp provides .NET bindings for [SPIRV-Reflect](https://github.com/KhronosGroup/SPIRV-Reflect) to allow generating reflection data for shaders entirely using C#
 
 # Usage
 
